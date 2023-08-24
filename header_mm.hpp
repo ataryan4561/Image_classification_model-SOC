@@ -5,9 +5,4 @@
 #include<math.h>
 #include<hls_math.h>
 using namespace std;
-struct axis_data
-{
-	float data;
-	ap_int<1> last;
-};
-void neural_nn1(hls::stream<axis_data> &input,hls::stream<axis_data> &output);
+void neural_nn2(float *input,float *output);

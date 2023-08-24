@@ -1,20 +1,12 @@
-#include"header.hpp"
+#include"header_mm.hpp"
 #include"data.h"
-#define ffloat half
-void neural_nn1(hls::stream<axis_data> &input,hls::stream<axis_data> &output)
+void neural_nn2(float *input,float *output)
 {
-	#pragma HLS INTERFACE ap_ctrl_none port=return
-	#pragma HLS INTERFACE axis register both port=input
-	#pragma HLS INTERFACE axis register both port=output
+	#pragma HLS INTERFACE s_axilite port=return
+	#pragma HLS INTERFACE m_axi depth=12288 port=input offset=slave
+	#pragma HLS INTERFACE m_axi depth=1 port=output offset=slave
 	float x_input[12288]={};
-//	#pragma HLS ARRAY_PARTITION variable=x_input complete dim=1
-	axis_data in,out;
-	for(int i=0; i<12288; i++)
-	{
-		#pragma HLS PIPELINE
-		in = input.read();
-		x_input[i]=in.data;
-	}
+	memcpy(x_input,(const float*)input,12288*sizeof(float));
 //	#pragma HLS ARRAY_PARTITION variable=W1 complete dim=1
 	#pragma HLS ARRAY_PARTITION variable=W2 complete dim=2
 	#pragma HLS ARRAY_PARTITION variable=W3 complete dim=2
@@ -99,7 +91,5 @@ void neural_nn1(hls::stream<axis_data> &input,hls::stream<axis_data> &output)
 	{
 		layer_4[0]=0;
 	}
-	out.data = layer_4[0];
-	out.last=1;
-	output.write(out);
+	memcpy((float*)output,layer_4,1*sizeof(float));
 }
