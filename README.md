@@ -3,6 +3,7 @@ It is 5 Layer Neural Network Model Build on SOC
 -----
 RELU and SIGMOID ( both activation functions are used)
 HLS Resource
+![Screenshot 2024-11-13 164236](https://github.com/user-attachments/assets/bdc90262-2475-4353-9e70-9acf5f8f1729)
 ![HLS_Resource](https://github.com/ataryan4561/Image_classification_model-SOC/assets/43813061/fcafb670-b278-4297-ab8c-602ed31ba368)
 -----
 Block Diagram
